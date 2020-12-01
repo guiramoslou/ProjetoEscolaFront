@@ -1,7 +1,8 @@
 import React from 'react'
 import httpService from '../../services/httpService'
-import { Link } from 'react-router-dom'
 import 'fontsource-roboto';
+import MaterialTable from 'material-table'
+
 
 class Aluno extends React.Component {
     constructor() {
@@ -26,17 +27,17 @@ class Aluno extends React.Component {
 
     render() {
         const { alunos } = this.state
-
         return (
-            <div>
-                <h1>Alunos</h1>
-                <ul>
-                    {
-                        alunos.map(aluno =>
-                            <li key={aluno.id}>{aluno.name}</li>)
-                    }
-                </ul>
-                <Link to="/novo-aluno">Novo Aluno</Link>
+            <div style={{ maxWidth: '100%' }}>
+                <MaterialTable
+                    columns={[
+                        { title: 'ID', field: 'id' },
+                        { title: 'Name', field: 'name' },
+                        { title: 'Classe', field: 'classe' }
+                    ]}
+                    data={alunos}
+                    title="Alunos"
+                />
             </div>
         )
     }
