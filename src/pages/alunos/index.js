@@ -51,15 +51,11 @@ class Aluno extends React.Component {
                     ]}
                     data={alunos}
                     title="Alunos"
-                    options={{
-                        selection: true
-                    }}
                     actions={[
                         {
-                            tooltip: 'Remove All Selected Users',
                             icon: 'delete',
-                            // onClick: this.handleDeleteAluno()
-                            onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+                            tooltip: 'Delete Aluno',
+                            onClick: (evt, rowData) => this.handleDeleteAluno(rowData.id)
                         }
                     ]}
                 />
