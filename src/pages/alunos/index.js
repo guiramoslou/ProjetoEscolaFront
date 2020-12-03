@@ -25,6 +25,20 @@ class Aluno extends React.Component {
             })
     }
 
+    handleDeleteAluno = (id) => {
+        console.log(id)
+        httpService.delete(`/aluno/${id}`)
+            .then(() => {
+                const { alunos } = this.state
+
+                const updatedAlunos = alunos.filter(aluno => aluno.id !== id)
+
+                this.setState({
+                    alunos: updatedAlunos
+                })
+            })
+    }
+
     render() {
         const { alunos } = this.state
         return (
@@ -37,6 +51,17 @@ class Aluno extends React.Component {
                     ]}
                     data={alunos}
                     title="Alunos"
+                    options={{
+                        selection: true
+                    }}
+                    actions={[
+                        {
+                            tooltip: 'Remove All Selected Users',
+                            icon: 'delete',
+                            // onClick: this.handleDeleteAluno()
+                            onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
+                        }
+                    ]}
                 />
             </div>
         )

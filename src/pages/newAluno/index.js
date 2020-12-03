@@ -1,23 +1,17 @@
 import React from 'react'
 import httpService from '../../services/httpService'
-import Input from '../../components/input'
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import AlunoForm from '../../components/alunoForm/index'
+
+
 
 class NewBook extends React.Component {
     constructor() {
         super()
-        this.state = {
-            name: "",
-            classe: "",
-            programa: null,
-            active: true
-        }
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault()
-
-        const aluno = this.state
-
+    handleSubmit = (aluno) => {
         httpService.post('/aluno', aluno)
             .then(response => {
                 alert('Success')
@@ -26,37 +20,25 @@ class NewBook extends React.Component {
             })
     }
 
-    handleChange = (event) => {
-        const { name, value } = event.target
-        this.setState({
-            [name]: value
-        })
-    }
-
     render() {
         const aluno = this.state
-        return (
-            <>
-                <h1>Novo Aluno</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <Input
-                        label="Nome"
-                        id="aluno[nome]"
-                        name="name"
-                        onChange={this.handleChange}
-                        value={aluno.name}
-                    />
-                    <Input
-                        label="Classe"
-                        id="aluno[classe]"
-                        name="classe"
-                        onChange={this.handleChange}
-                        value={aluno.classe}
-                    />
 
-                    <input type="submit" value="Submit" />
-                </form>
-            </>
+        const classes = makeStyles((theme) => ({
+            root: {
+                '& .MuiTextField-root': {
+                    margin: theme.spacing(1),
+                    width: '25ch',
+                },
+            },
+        }));
+
+        return (
+            <React.Fragment>
+                <h1>Novo Aluno</h1>
+                <AlunoForm
+                    handleSubmit={this.handleSubmit}
+                />
+            </React.Fragment>
         )
     }
 }
